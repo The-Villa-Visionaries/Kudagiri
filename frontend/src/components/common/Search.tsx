@@ -1,4 +1,4 @@
-import ArrowUpDown from '../../assets/ArrowUpDown.svg'
+import ArrowUpDown from '../../assets/icons/ArrowUpDown.svg'
 
 export default function Search() {
     return (

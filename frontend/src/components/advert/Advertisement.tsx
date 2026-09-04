@@ -1,4 +1,4 @@
-import advertisementSvg from '../../assets/advertisement.svg'
+import advertisementSvg from '../../assets/icons/advertisement.svg'
 
 export default function Advertisement() {
     return (

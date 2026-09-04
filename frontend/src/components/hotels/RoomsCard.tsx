@@ -1,7 +1,7 @@
-import starIcon from '../../assets/Star.svg';
-import bedIcon from '../../assets/Bed.svg';
-import twoguestIcon from '../../assets/TwoGuest.svg';
-import roomsizeIcon from '../../assets/RoomSize.svg';
+import starIcon from '../../assets/icons/Star.svg';
+import bedIcon from '../../assets/icons/Bed.svg';
+import twoguestIcon from '../../assets/icons/TwoGuest.svg';
+import roomsizeIcon from '../../assets/icons/RoomSize.svg';
 
 export default function RoomsCard() {
     return (
