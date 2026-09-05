@@ -2,6 +2,8 @@ import PromoBanner from "../components/promotions/PromoBanner"
 import RoomGrid from "../components/hotels/RoomGrid"
 import PageTitle from "../components/common/PageTitle"
 import RoomFilterBar from "../components/hotels/RoomFilterBar"
+import PageIndex from "../components/common/PageIndex"
+import BookingSummary from "../components/hotels/BookingSummary"
 
 export default function Main() {
     return (
@@ -9,7 +11,13 @@ export default function Main() {
             <PromoBanner />
             <PageTitle title="Island Hotel Stays" description="Choose your perfect retreat — beachfront villas, garden bungalows, and ocean suites await." />
             <RoomFilterBar />
-            <RoomGrid />
+            <div className="w-full flex items-start justify-between">
+                <div className="min-w-3/4">
+                    <RoomGrid />
+                    <PageIndex />
+                </div>
+                <BookingSummary />
+            </div>
         </div>
     )
 }
