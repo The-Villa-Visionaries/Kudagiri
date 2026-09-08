@@ -1,0 +1,14 @@
+### API
+Contains FastAPI route handlers. 
+These handle incoming HTTP requests, parse request parameters, and return JSON responses.
+Remember to use VALID HTTP ERROR CODES!
+
+## Expected Files
+``hotels.py``   - Hotels & Rooms
+``bookings.py`` - Tickets & Reservations
+``auth.py``     - Login & Signup
+``router.py``   - Combine above to make Master API Router
+
+# Assigned Task to 'Jinaah' (Backend Developer) & 'Dhaavoodhu' (Code Validation)
+
+# Delete file after completion of task.

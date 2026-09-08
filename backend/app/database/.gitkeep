@@ -1,0 +1,11 @@
+### Database
+Manages low-level database connections, engine initialization, session generators, and base ORM classes.
+Remember to use VALID HTTP ERROR CODES!
+
+## Expected Files
+``sessions.py`` - SQLAlchemy engine Creation, SessionLocal, and GetDatabase dependency
+``base.py``     - Imports the declarative Base class so migrations and models can inherit from it
+
+# Assigned Task to 'Jinaah' (Backend Developer) & 'Dhaavoodhu' (Code Validation)
+
+# Delete file after completion of task.

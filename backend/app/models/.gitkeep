@@ -1,0 +1,12 @@
+### Models
+Defines database tables using SQLAlchemy ORM classes. Each class represents a physical table in your SQLite database.
+Remember to use VALID HTTP ERROR CODES!
+
+## Expected Files
+``user.py``     - User
+``hotel.py``    - Hotel & Room
+``booking.py``  - Booking & Ticket
+
+# Assigned Task to 'Jinaah' (Backend Developer) & 'Dhaavoodhu' (Code Validation)
+
+# Delete file after completion of task.
