@@ -17,7 +17,8 @@ def seed_demo_data(session: Session) -> bool:
         return False
 
     hotel = Hotel(
-        name="Demo Island Hotel", description="Sample hotel for local testing.",
+        name="Demo Island Hotel", 
+        description="Sample hotel for local testing.",
         location="Demo island",
     )
     session.add(hotel)

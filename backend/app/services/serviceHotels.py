@@ -1,24 +1,18 @@
 from decimal import Decimal
-
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
-
 from app.models.hotel import Hotel, Room
-
 
 def list_hotels(session: Session, *, skip: int, limit: int):
     total = session.scalar(select(func.count()).select_from(Hotel))
     hotels = session.scalars(select(Hotel).order_by(Hotel.id).offset(skip).limit(limit)).all()
     return {"items": hotels, "total": total, "skip": skip, "limit": limit}
 
-
 def get_hotel(session: Session, hotel_id: int) -> Hotel | None:
     return session.get(Hotel, hotel_id)
 
-
 def get_room(session: Session, room_id: int) -> Room | None:
     return session.get(Room, room_id)
-
 
 def list_rooms(
     session: Session,

@@ -1,10 +1,7 @@
 from decimal import Decimal
-
 from sqlalchemy import CheckConstraint, ForeignKey, JSON, Numeric, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 from app.database.base import Base
-
 
 class Hotel(Base):
     __tablename__ = "hotels"
@@ -14,7 +11,6 @@ class Hotel(Base):
     description: Mapped[str] = mapped_column(Text, default="")
     location: Mapped[str] = mapped_column(String(200))
     rooms: Mapped[list["Room"]] = relationship(back_populates="hotel")
-
 
 class Room(Base):
     __tablename__ = "rooms"

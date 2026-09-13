@@ -1,11 +1,9 @@
 from decimal import Decimal
 from typing import Literal
-
 from pydantic import BaseModel, ConfigDict
 
 RoomCategory = Literal["beachfront", "ocean_suite", "garden", "family"]
 RoomSort = Literal["name", "price_asc", "price_desc"]
-
 
 class HotelRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -14,7 +12,6 @@ class HotelRead(BaseModel):
     name: str
     description: str
     location: str
-
 
 class RoomRead(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -32,13 +29,11 @@ class RoomRead(BaseModel):
     amenities: list[str]
     image_url: str | None
 
-
 class HotelPage(BaseModel):
     items: list[HotelRead]
     total: int
     skip: int
     limit: int
-
 
 class RoomPage(BaseModel):
     items: list[RoomRead]

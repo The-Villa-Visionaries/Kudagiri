@@ -1,9 +1,7 @@
 from decimal import Decimal
 from typing import Annotated
-
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
-
 from app.database.sessions import get_database
 from app.schemas.schemaHotel import (
     HotelPage,
@@ -20,7 +18,6 @@ Database = Annotated[Session, Depends(get_database)]
 PositiveId = Annotated[int, Path(gt=0)]
 Skip = Annotated[int, Query(ge=0)]
 Limit = Annotated[int, Query(ge=1, le=100)]
-
 
 def room_filters(
     q: Annotated[
@@ -42,17 +39,18 @@ def room_filters(
         sort=sort, skip=skip, limit=limit,
     )
 
-
 Filters = Annotated[dict, Depends(room_filters)]
 
-
-@router.get("/hotels", response_model=HotelPage)
+@router.get(
+    "/hotels", 
+    response_model=HotelPage
+)
 def list_hotels(database: Database, skip: Skip = 0, limit: Limit = 20):
     return serviceHotels.list_hotels(database, skip=skip, limit=limit)
 
-
 @router.get(
-    "/hotels/{hotel_id}", response_model=HotelRead,
+    "/hotels/{hotel_id}", 
+    response_model=HotelRead,
     responses={404: {"description": "Hotel not found"}},
 )
 def get_hotel(hotel_id: PositiveId, database: Database):
@@ -61,27 +59,29 @@ def get_hotel(hotel_id: PositiveId, database: Database):
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Hotel not found")
     return hotel
 
-
 @router.get(
-    "/hotels/{hotel_id}/rooms", response_model=RoomPage,
+    "/hotels/{hotel_id}/rooms", 
+    response_model=RoomPage,
     responses={404: {"description": "Hotel not found"}},
 )
 def list_hotel_rooms(hotel_id: PositiveId, database: Database, filters: Filters):
     get_hotel(hotel_id, database)
     return serviceHotels.list_rooms(database, hotel_id=hotel_id, **filters)
 
-
-@router.get("/rooms", response_model=RoomPage)
+@router.get(
+    "/rooms", 
+    response_model=RoomPage
+)
 def list_rooms(database: Database, filters: Filters):
     return serviceHotels.list_rooms(database, **filters)
 
-
 @router.get(
-    "/rooms/{room_id}", response_model=RoomRead,
+    "/rooms/{room_id}", 
+    response_model=RoomRead,
     responses={404: {"description": "Room not found"}},
 )
 def get_room(room_id: PositiveId, database: Database):
     room = serviceHotels.get_room(database, room_id)
     if room is None:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, "Room not found")
+        raise HTTPException(status_code=404, detail="Room not found")
     return room

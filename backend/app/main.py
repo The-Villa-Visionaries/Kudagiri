@@ -1,14 +1,11 @@
 from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import Engine
-
 from app.api.router import api_router
 from app.core.config import CORS_ORIGINS, DATABASE_URL
 from app.database.base import Base
 from app.database.sessions import create_database_engine
-
 
 def create_app(db_engine: Engine | None = None) -> FastAPI:
     @asynccontextmanager
@@ -36,6 +33,5 @@ def create_app(db_engine: Engine | None = None) -> FastAPI:
         return {"status": "ok"}
 
     return app
-
 
 app = create_app()
