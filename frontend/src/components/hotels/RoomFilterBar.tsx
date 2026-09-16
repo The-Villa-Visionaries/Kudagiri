@@ -2,7 +2,7 @@ import sortSVG from "../../assets/icons/sort.svg"
 
 export default function RoomFilterBar() {
     return (
-        <div className="mx-5.5 bg-white border-[#C0E4E4] border-2 rounded-[35px] px-5 py-3 gap-5">
+        <div className="bg-white border-[#C0E4E4] border-2 rounded-[35px] px-5 py-3 gap-5">
             <div className="flex items-center gap-3 flex-1">
                 <div className="flex-1 h-10 border rounded-2xl border-[#C0E4E4] bg-[#E8F5F5] flex items-center justify-start px-3 gap-3">
                     <input type="text" placeholder='Search rooms by name or feature...' className="bg-transparent w-full h-full border-none focus:outline-none placeholder:text-[#558282]"/>

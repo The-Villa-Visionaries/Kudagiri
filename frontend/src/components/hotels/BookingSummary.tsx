@@ -4,7 +4,7 @@ import promoSVG from "../../assets/icons/promo-d.svg"
 
 export default function BookingSummary() {
     return (
-        <div className="sticky top-22 w-full rounded-2xl bg-white overflow-hidden mt-8 shadow-md">
+        <div className="sticky top-19 w-full rounded-2xl bg-white overflow-hidden mt-9">
             <div className="w-full h-25 bg-linear-to-r from-[#0E7490] to-[#06B6D3] flex flex-col justify-center gap-2 p-4 text-white">
                 <h1 className="text-lg font-black">Your Booking Summary</h1>
                 <p className="text-sm pl-2">Complete the details below to reserve</p>
@@ -36,9 +36,9 @@ export default function BookingSummary() {
                     <h1>Guests</h1>
                 </div>
                 <div className="w-full flex items-center justify-between font-bold">
-                    <button className="w-10 h-10 bg-[#0E7490] text-white p-2 rounded-full">-</button>
+                    <button className="w-10 h-10 bg-[#0E7490] text-white p-2 rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">-</button>
                     <span>2</span>
-                    <button className="w-10 h-10 bg-[#0E7490] text-white p-2 rounded-full">+</button>
+                    <button className="w-10 h-10 bg-[#0E7490] text-white p-2 rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">+</button>
                 </div>
                 <div className="p-2 flex gap-2">
                     <img src={promoSVG} className="w-6 h-6" />
@@ -46,10 +46,9 @@ export default function BookingSummary() {
                 </div>
                 <div className="w-full flex gap-2">
                     <input type="text" placeholder="Enter promo code" className="w-2/3 p-2 px-3 bg-[#E8F5F5] text-black border border-[#558282] rounded-full" />
-                    <button className="w-1/3 p-2 bg-[#0E7490] text-white rounded-full">Apply</button>
+                    <button className="w-1/3 p-2 bg-[#0E7490] text-white rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">Apply</button>
                 </div>
                 <button className="w-full h-15 p-2 bg-linear-to-r from-[#0E7490] to-[#0E7490] text-white font-black rounded-full hover:to-[#06B6D3]">Confirm Reservation</button>
-                <p className="text-sm text-[#558282] w-full text-center px-4">Free cancellation up to 24 hours before check-in. Secure payments.</p>
             </div>
         </div>
     )
