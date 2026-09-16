@@ -2,7 +2,7 @@ import promoSVG from "../../assets/icons/promo.svg"
 
 export default function PromoBanner() {
     return (
-        <div className="relative w-full bg-linear-to-r from-[#0E7490] to-[#06B6D3] flex items-center justify-between p-8 gap-5 rounded-[35px] overflow-hidden z-10">
+        <div className="relative w-full bg-linear-to-r from-[#0E7490] to-[#06B6D3] flex items-center justify-between p-8 gap-5 rounded-2xl   overflow-hidden z-10">
             <div className="absolute bottom-[3vh] left-[8vw] w-30 h-30 bg-[#2688A1] rounded-full z-11"/>
             <div className="absolute top-[3vh] right-[10vw] w-40 h-40 bg-[#20B6D1] rounded-full z-11"/>
             <div className="flex items-center gap-5 z-12">
