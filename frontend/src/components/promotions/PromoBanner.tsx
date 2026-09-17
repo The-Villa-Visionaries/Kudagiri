@@ -7,9 +7,10 @@ export default function PromoBanner() {
             <div className="absolute top-[3vh] right-[10vw] w-40 h-40 bg-[#20B6D1] rounded-full z-11"/>
             <div className="flex items-center gap-5 z-12">
                 <img src={promoSVG} alt="Promotion" className="w-8 h-8 z-12"/>
-                <p className="text-white z-12 text-lg text-shadow-lg">
-                    <span className="font-bold">☀️ Summer Special — </span>
-                    15% off Garden Bungalows for stays Aug 29 – Sep 30. Use code SUMMER15
+                <p className="text-white z-12 text-lg">
+                    <span className="font-bold text-shadow-lg">Summer Special </span>
+                    — 15% off Garden Bungalows for stays Aug 29 – Sep 30.
+                    <span className="font-bold px-2 bg-white/30 rounded-full ml-2 text-shadow-none">Code: SUMMER15</span>
                 </p>
             </div>
         </div>

@@ -7,7 +7,7 @@ import RoomCardTag from "./RoomCardTag"
 
 export default function RoomsCard() {
     return (
-        <div className="w-[calc(50%-20px)] bg-white rounded-2xl overflow-hidden group">
+        <div className="w-[calc(50%-10px)] bg-white rounded-2xl overflow-hidden group">
             <div className="relative w-full h-48 overflow-hidden bg-linear-to-r from-[#0E7490] to-[#06B6D3]">
                 <img src="https://five-star-alliance.s3.amazonaws.com/field/image/nodes/2017/45956/0_villa-G.jpg" className="w-full h-48 object-cover transition-transform duration-500 ease-in-out group-hover:scale-110 hover:cursor-pointer"/>
             </div>
@@ -20,12 +20,12 @@ export default function RoomsCard() {
                     </div>
                 </div>
                 <p className="text-[#558282]">Perfect for a romantic getaway</p>
-                <div className="flex items-center gap-3 mt-1">
+                <div className="flex items-center gap-3">
                     <RoomCardSpecs icon={doubleSVG} text="Upto 2 guests" />
                     <RoomCardSpecs icon={roomsizeSVG} text="95 m²" />
                     <RoomCardSpecs icon={bedSVG} text="1 King Bed" />
                 </div>
-                <div className="flex items-center gap-2 mt-3">
+                <div className="flex items-center gap-2 mt-2">
                     <RoomCardTag text="Plunge Pool" />
                     <RoomCardTag text="Butler Service" />
                     <RoomCardTag text="WiFi" />
@@ -35,7 +35,7 @@ export default function RoomsCard() {
                     <p className="text-[#B6570F] text-sm font-medium">Only a few left — Get em while their hot!</p>
                 </div>
                 <hr className="border-[#E8F5F5] border-y-1 my-3" />
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mt-2">
                     <div className="flex items-end text-[#0E7490]">
                         <h3 className="text-2xl font-bold">$780</h3>
                         <p className="text-sm">/night</p>

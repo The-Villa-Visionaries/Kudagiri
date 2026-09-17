@@ -7,7 +7,7 @@ export default function RoomsGrid() {
                 <p className="text-[#558282] text-sm bg-[#F0FAFA]"><span className="font-bold">67</span> rooms available</p>
                 <p className="text-[#558282] text-sm bg-[#F0FAFA]">Showing: 1-10 of 67</p>
             </div>
-            <div className="flex flex-wrap gap-5 justify-around">
+            <div className="flex flex-wrap gap-5 justify-between">
                 <RoomCard />
                 <RoomCard />
                 <RoomCard />

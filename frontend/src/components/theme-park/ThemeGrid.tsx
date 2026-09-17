@@ -1,4 +1,4 @@
-import ThemeCards from "./ThemeCards"
+import ThemeCard from "./ThemeCard"
 
 export default function ThemeGrid() {
     return (
@@ -7,11 +7,10 @@ export default function ThemeGrid() {
                 <p className="text-[#558282] text-sm bg-[#F0FAFA]"><span className="font-bold">30</span> Theme Park Activities and Events</p>
                 <p className="text-[#558282] text-sm bg-[#F0FAFA]">Showing: 1-10 of 30</p>
             </div>
-            <div className="flex flex-wrap gap-5 justify-around">
-                <ThemeCards />
-                <ThemeCards />
-                <ThemeCards />
-                <ThemeCards />
+            <div className="flex flex-wrap gap-5 justify-between">
+                <ThemeCard />
+                <ThemeCard />
+                <ThemeCard />
             </div>
         </div>
     )
