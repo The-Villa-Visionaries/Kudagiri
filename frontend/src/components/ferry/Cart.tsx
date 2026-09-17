@@ -23,7 +23,7 @@ export default function Cart() {
                         <h1 className="text-lg font-bold">Total</h1>
                         <p className="text-2xl font-bold text-[#0E7490]">-$10.00</p>
                     </div>
-                    <button className="w-full h-15 p-2 bg-linear-to-r from-[#0E7490] to-[#0E7490] text-white font-black rounded-full hover:to-[#06B6D3]">Checkout</button>
+                    <button className="w-full h-15 p-2 bg-linear-to-r from-[#0E7490] to-[#0E7490] text-white font-black rounded-full hover:to-[#06B6D3] hover:cursor-pointer">Checkout</button>
                 </div>
             </div>
         </div>

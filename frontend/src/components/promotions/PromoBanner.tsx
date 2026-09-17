@@ -10,7 +10,7 @@ export default function PromoBanner() {
                 <p className="text-white z-12 text-lg">
                     <span className="font-bold text-shadow-lg">Summer Special </span>
                     — 15% off Garden Bungalows for stays Aug 29 – Sep 30.
-                    <span className="font-bold px-2 bg-white/30 rounded-full ml-2 text-shadow-none">Code: SUMMER15</span>
+                    <span className="font-bold px-2 bg-white/30 rounded-full ml-2 text-shadow-none select-all">SUMMER15</span>
                 </p>
             </div>
         </div>

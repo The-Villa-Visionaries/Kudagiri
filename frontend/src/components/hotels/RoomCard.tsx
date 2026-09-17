@@ -13,7 +13,7 @@ export default function RoomsCard() {
             </div>
             <div className="p-4"> 
                 <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-lg font-medium text-[#333]">Deluxe Room</h3>
+                    <h3 className="text-lg font-medium text-[#333]">Couples Retreat</h3>
                     <div className="flex items-center text-[#558282] text-sm">
                         <img src={starSVG} alt="Room" className="w-6 h-6 inline-block mr-1"/>
                         <p className="font-medium leading-[14px]"><span className="font-bold text-black">5</span> (312 reviews)</p>

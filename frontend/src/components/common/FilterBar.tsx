@@ -9,9 +9,9 @@ export default function FilterBar({ Page }: FilterBarProps) {
     let PicksList = [""]
 
     if (Page === "Hotels") {
-        message = "Search rooms by name or feature..."
+        message = "Search hotels by name or feature..."
         PicksList = [
-            "🛏️ All rooms",
+            "🛏️ All Hotels",
             "🏖️ Beachfront",
             "🌊 Ocean Suite",
             "🌿 Garden",
@@ -35,7 +35,7 @@ export default function FilterBar({ Page }: FilterBarProps) {
             "🚆 Train Routes",
             "🚤 Ferry Routes",
             "✈️ Seaplane Routes",
-            "🚀 RocketShip Routes"
+            "🚀 Rocketship Routes"
         ]
     }
     return (

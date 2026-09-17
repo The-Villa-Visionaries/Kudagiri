@@ -11,8 +11,8 @@ export default function BookingSummary() {
             </div>
             <div className="w-full p-4 flex flex-col gap-4">
                 <div className="w-full border-dashed border-[#E8F5F5] border-3 rounded-2xl flex flex-col items-center justify-center p-4 text-[#558282]">
-                    <h1 className="text-md font-semibold">No room selected yet</h1>
-                    <p className="text-sm text-center">Choose a room from the list to get started</p>
+                    <h1 className="text-md font-semibold">No hotel selected yet</h1>
+                    <p className="text-sm text-center">Choose a hotel from the list to get started</p>
                 </div>
                 <div className="w-full flex items-center justify-between gap-2">
                     <div className="w-1/2">
@@ -20,14 +20,14 @@ export default function BookingSummary() {
                             <img src={calenderSVG} alt="Calendar" className="w-6 h-6" />
                             <h1 className="text-md ml-2">Check-in</h1>
                         </div>
-                        <input type="date" className="w-full p-2 bg-[#E8F5F5] text-black border border-[#558282] rounded-full" />
+                        <input type="date" className="w-full p-2 bg-[#E8F5F5] text-black border border-[#558282] rounded-full hover:cursor-pointer" />
                     </div>
                     <div className="w-1/2">
                         <div className="w-full h-full flex items-center justify-start p-2">
                             <img src={calenderSVG} alt="Calendar" className="w-6 h-6" />
                             <h1 className="text-md ml-2">Check-out</h1>
                         </div>
-                        <input type="date" className="w-full p-2 bg-[#E8F5F5] text-black border border-[#558282] rounded-full" />
+                        <input type="date" className="w-full p-2 bg-[#E8F5F5] text-black border border-[#558282] rounded-full hover:cursor-pointer" />
                     </div>
                 </div>
                 <p className="text-sm text-[#558282] w-full text-center">67 nights selected</p>
@@ -41,7 +41,7 @@ export default function BookingSummary() {
                     <button className="w-10 h-10 bg-[#0E7490] text-white p-2 rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">+</button>
                 </div>
                 <PromoCode />
-                <button className="w-full h-15 p-2 bg-linear-to-r from-[#0E7490] to-[#0E7490] text-white font-black rounded-full hover:to-[#06B6D3]">Confirm Reservation</button>
+                <button className="w-full h-15 p-2 bg-linear-to-r from-[#0E7490] to-[#0E7490] text-white font-black rounded-full hover:to-[#06B6D3] hover:cursor-pointer">Confirm Reservation</button>
             </div>
         </div>
     )
