@@ -101,10 +101,10 @@ def test_invalid_requests(client, path):
     assert response.json()["detail"]
 
 
-def test_catalogue_persists_across_app_restart(client, engine):
+def test_catalogue_persists_across_app_restart(client, engine, auth_settings):
     restarted_engine = create_database_engine(str(engine.url))
     try:
-        with TestClient(create_app(restarted_engine)) as restarted_client:
+        with TestClient(create_app(restarted_engine, auth_settings)) as restarted_client:
             assert restarted_client.get("/api/rooms").json()["total"] == 4
     finally:
         restarted_engine.dispose()
