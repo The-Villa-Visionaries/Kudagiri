@@ -4,6 +4,7 @@ import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
+from app.core.config import AuthSettings
 from app.database.sessions import create_database_engine
 from app.main import create_app
 from app.models.hotel import Hotel, Room
@@ -17,8 +18,13 @@ def engine(tmp_path):
 
 
 @pytest.fixture
-def empty_client(engine):
-    with TestClient(create_app(engine)) as client:
+def auth_settings():
+    return AuthSettings(secret_key="test-only-signing-key-never-use-in-deployment-" * 2)
+
+
+@pytest.fixture
+def empty_client(engine, auth_settings):
+    with TestClient(create_app(engine, auth_settings)) as client:
         yield client
 
 
