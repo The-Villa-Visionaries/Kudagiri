@@ -1,6 +1,7 @@
 import calenderSVG from "../../assets/icons/calendar.svg"
 import doubleSVG from "../../assets/icons/double.svg"
-import PromoCode from "../common/PromoCode"
+import InputBox from "../common/InputBox"
+import promoSVG from "../../assets/icons/promo-d.svg"
 
 export default function BookingSummary() {
     return (
@@ -40,7 +41,7 @@ export default function BookingSummary() {
                     <span>2</span>
                     <button className="w-10 h-10 bg-[#0E7490] text-white p-2 rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">+</button>
                 </div>
-                <PromoCode />
+                <InputBox icon={promoSVG} label="Promo Code" placeholder="Enter promo code" />
                 <button className="w-full h-15 p-2 bg-linear-to-r from-[#0E7490] to-[#0E7490] text-white font-black rounded-full hover:to-[#06B6D3] hover:cursor-pointer">Confirm Reservation</button>
             </div>
         </div>

@@ -1,4 +1,5 @@
-import PromoCode from "../common/PromoCode";
+import promoSVG from "../../assets/icons/promo-d.svg"
+import InputBox from "../common/InputBox"
 import CardRow from "../common/CardRow";
 
 export default function Cart() {
@@ -14,7 +15,7 @@ export default function Cart() {
                     <p className="text-sm text-center">Choose an Route from the list to get started</p>
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                    <PromoCode />
+                    <InputBox icon={promoSVG} label="Promo Code" placeholder="Enter promo code" />
                     <CardRow title="Subtotal" attribute="$0.00" />
                     <CardRow title="Discount" attribute="-$10.00" />
                     <CardRow title="Tax (8%)" attribute="$0.00" />

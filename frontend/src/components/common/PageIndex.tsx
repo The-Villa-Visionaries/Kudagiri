@@ -6,19 +6,19 @@ export default function PageIndex() {
     const [searchParams] = useSearchParams()
 
     const handlePrevClick = () => {
-        const currentPage = parseInt(searchParams.get("page") || "1", 10);
+        const currentPage = parseInt(searchParams.get("page") || "1", 10)
         if (currentPage <= 1) return
         navigate(`${location.pathname}?page=${currentPage - 1}`);
     }
     const handleNextClick = () => {
-        let currentPage = parseInt(searchParams.get("page") || "1", 10);
+        let currentPage = parseInt(searchParams.get("page") || "1", 10)
         if (currentPage <= 0) {
             currentPage = 0
         }
-        navigate(`${location.pathname}?page=${currentPage + 1}`);
+        navigate(`${location.pathname}?page=${currentPage + 1}`)
     }
     const handlePageClick = (page:string) => {
-        navigate(`${location.pathname}?page=${page}`);
+        navigate(`${location.pathname}?page=${page}`)
     }
     return (
         <div className="w-full flex items-center justify-center gap-3 mt-5">

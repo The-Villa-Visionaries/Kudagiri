@@ -1,5 +1,6 @@
-import PromoCode from "../common/PromoCode";
 import CardRow from "../common/CardRow";
+import InputBox from "../common/InputBox";
+import promoSVG from "../../assets/icons/promo-d.svg"
 
 export default function Cart() {
     return (
@@ -8,13 +9,13 @@ export default function Cart() {
                 <h1 className="text-lg font-black">Activity Cart</h1>
                 <p className="text-sm pl-2">Complete the details below to reserve</p>
             </div>
-            <div className="w-full p-4 flex flex-col gap-4">
+            <div className="w-full p-4 flex flex-col gap-3">
                 <div className="w-full border-dashed border-[#E8F5F5] border-3 rounded-2xl flex flex-col items-center justify-center p-4 text-[#558282]">
                     <h1 className="text-md font-semibold">No Activity selected yet</h1>
                     <p className="text-sm text-center">Choose an Activity from the list to get started</p>
                 </div>
-                <div className="w-full flex flex-col gap-4">
-                    <PromoCode />
+                <div className="w-full flex flex-col gap-3">
+                    <InputBox icon={promoSVG} label="Promo Code" placeholder="Enter promo code" />
                     <CardRow title="Subtotal" attribute="$64.00" />
                     <CardRow title="Discount" attribute="-$10.00" />
                     <CardRow title="Tax (8%)" attribute="$5.12" />

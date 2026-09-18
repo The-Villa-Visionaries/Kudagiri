@@ -6,7 +6,13 @@ import dangerSVG from "../../assets/icons/danger.svg"
 import doubleSVG from "../../assets/icons/double.svg"
 import justButtSVG from "../../assets/icons/justButt.svg"
 
-export default function ThemeCard() {
+interface ThemeCardProps {
+    role?: string
+}
+
+export default function ThemeCard({ role }: ThemeCardProps) {
+    const allowAccess = role === "Admin" || role === "Ticketing-Staff"
+    const buttonText = allowAccess ? "Select" : "Book Now"
     return (
         <div className="w-[calc(50%-10px)] bg-white rounded-2xl overflow-hidden group">
             <div className=" relative w-full h-48 overflow-hidden bg-linear-to-r from-[#0E7490] to-[#06B6D3]">
@@ -30,8 +36,8 @@ export default function ThemeCard() {
                 <div className="w-full mt-2">
                     <div className="flex items-center justify-between">
                         <div className="flex gap-2 text-[#558282]">
-                            <img src={doubleSVG} className="w-6 h-6" />
-                            <p>Today's Capacity</p>
+                            <img src={doubleSVG} className="w-5 h-5" />
+                            <p className="text-sm">Today's Capacity</p>
                         </div>
                         <p className="text-[#BB1C1C] font-bold text-sm">289/320 booked (90%)</p>
                     </div>
@@ -39,19 +45,14 @@ export default function ThemeCard() {
                         <div className="w-[90%] h-full bg-[#BB1C1C] rounded-full" />
                     </div>
                 </div>
-                <div className="w-full mt-2 flex items-center justify-between">
-                    <p className="text-[#558282]">View times & Book</p>
-                    <img src={justButtSVG} className="w-6 h-6"/>
-                </div>
                 <hr className="border-[#E8F5F5] border-y my-2" />
                 <div className="flex items-center justify-between mt-3">
                     <div className="flex items-end text-[#0E7490]">
-                        <h3 className="text-2xl font-bold">from $34.50</h3>
+                        <h3 className="text-2xl font-bold">$34.50</h3>
                         <p className="text-sm">/person</p>
                     </div>
-                    <button className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">Book Now</button>
+                    <button className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>
                 </div>
-
             </div>
         </div>
     )
