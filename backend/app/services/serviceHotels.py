@@ -2,6 +2,7 @@ from decimal import Decimal
 from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 from app.models.hotel import Hotel, Room
+from app.models.booking import RoomNight
 
 def list_hotels(session: Session, *, skip: int, limit: int):
     total = session.scalar(select(func.count()).select_from(Hotel))
@@ -25,6 +26,8 @@ def list_rooms(
     sort: str = "name",
     skip: int = 0,
     limit: int = 20,
+    check_in=None,
+    check_out=None,
 ):
     query = select(Room)
     if hotel_id is not None:
@@ -41,6 +44,13 @@ def list_rooms(
         query = query.where(Room.max_guests >= guests)
     if max_price is not None:
         query = query.where(Room.price_per_night <= max_price)
+    if check_in is not None and check_out is not None:
+        reserved = select(RoomNight.room_id).where(
+            RoomNight.room_id == Room.id,
+            RoomNight.stay_date >= check_in,
+            RoomNight.stay_date < check_out,
+        ).exists()
+        query = query.where(~reserved)
 
     total = session.scalar(select(func.count()).select_from(query.subquery()))
     ordering = {
