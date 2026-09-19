@@ -8,6 +8,7 @@ from app.api.router import api_router
 from app.core.config import AuthSettings, CORS_ORIGINS, DATABASE_URL, load_auth_settings
 from app.database.base import Base
 from app.database.sessions import create_database_engine
+from app.services.serviceBookings import BookingError
 
 def create_app(db_engine: Engine | None = None, auth_settings: AuthSettings | None = None) -> FastAPI:
     @asynccontextmanager
@@ -22,7 +23,7 @@ def create_app(db_engine: Engine | None = None, auth_settings: AuthSettings | No
             if db_engine is None:
                 engine.dispose()
 
-    app = FastAPI(title="Kudagiri API", version="0.2.0", lifespan=lifespan)
+    app = FastAPI(title="Kudagiri API", version="0.3.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=CORS_ORIGINS,
@@ -30,6 +31,13 @@ def create_app(db_engine: Engine | None = None, auth_settings: AuthSettings | No
         allow_headers=["Content-Type", "Authorization"],
     )
     app.include_router(api_router)
+
+    @app.exception_handler(BookingError)
+    async def booking_error_handler(request, exc):
+        return JSONResponse(
+            status_code=exc.status_code, content={"detail": exc.detail},
+            headers={"Cache-Control": "no-store"},
+        )
 
     @app.exception_handler(RequestValidationError)
     async def validation_error_handler(request, exc):

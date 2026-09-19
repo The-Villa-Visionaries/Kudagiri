@@ -1,8 +1,10 @@
 from decimal import Decimal
+from datetime import date
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, Path, Query, status
 from sqlalchemy.orm import Session
 from app.database.sessions import get_database
+from app.core.dates import validate_stay
 from app.schemas.schemaHotel import (
     HotelPage,
     HotelRead,
@@ -33,10 +35,20 @@ def room_filters(
     sort: RoomSort = "name",
     skip: Skip = 0,
     limit: Limit = 20,
+    check_in: date | None = None,
+    check_out: date | None = None,
 ):
+    if (check_in is None) != (check_out is None):
+        raise HTTPException(422, "Provide both check_in and check_out")
+    if check_in is not None:
+        try:
+            validate_stay(check_in, check_out)
+        except ValueError as error:
+            raise HTTPException(422, str(error)) from None
     return dict(
         q=q, category=category, guests=guests, max_price=max_price,
         sort=sort, skip=skip, limit=limit,
+        check_in=check_in, check_out=check_out,
     )
 
 Filters = Annotated[dict, Depends(room_filters)]

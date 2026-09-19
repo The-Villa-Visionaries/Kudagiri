@@ -1,6 +1,7 @@
 """Optional sample catalogue for local development: python -m app.seed."""
 
 from decimal import Decimal
+from datetime import datetime, time, timedelta
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -9,6 +10,8 @@ from app.core.config import DATABASE_URL
 from app.database.base import Base
 from app.database.sessions import create_database_engine
 from app.models.hotel import Hotel, Room
+from app.models.booking import TicketSession
+from app.core.dates import ISLAND_TIMEZONE, island_today
 
 
 def seed_demo_data(session: Session) -> bool:
@@ -38,6 +41,24 @@ def seed_demo_data(session: Session) -> bool:
     return True
 
 
+def seed_ticket_sessions(session: Session) -> bool:
+    if session.scalar(select(TicketSession.id).limit(1)) is not None:
+        return False
+    tomorrow = island_today() + timedelta(days=1)
+    for kind, name, hour, capacity, price in [
+        ("ferry", "Demo ferry: Harbour to Island", 9, 20, "15.00"),
+        ("theme_park", "Demo theme-park admission", 10, 30, "28.00"),
+    ]:
+        start = datetime.combine(tomorrow, time(hour), tzinfo=ISLAND_TIMEZONE)
+        session.add(TicketSession(
+            kind=kind, name=name, description="Sample schedule and price for local testing only.",
+            location="Demo island", starts_at=start, ends_at=start + timedelta(hours=1),
+            capacity=capacity, price=Decimal(price), currency="USD",
+        ))
+    session.commit()
+    return True
+
+
 def main():
     engine = create_database_engine(DATABASE_URL)
     try:
@@ -48,6 +69,10 @@ def main():
                 print("Added one demo hotel and four demo rooms.")
             else:
                 print("Catalogue already has data; nothing changed.")
+            if seed_ticket_sessions(session):
+                print("Added two demo ticket sessions for tomorrow.")
+            else:
+                print("Ticket sessions already exist; nothing changed.")
     finally:
         engine.dispose()
 
