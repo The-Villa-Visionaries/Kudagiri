@@ -2,11 +2,14 @@ import sortSVG from "../../assets/icons/sort.svg"
 
 interface FilterBarProps {
     Page: string
+    Create?: boolean
+    onCreateClick?: () => void
 }
 
-export default function FilterBar({ Page }: FilterBarProps) {
+export default function FilterBar({ Page, Create, onCreateClick }: FilterBarProps) {
     let message = ""
     let PicksList = [""]
+    let type = ""
 
     if (Page === "Hotels") {
         message = "Search hotels by name or feature..."
@@ -18,6 +21,7 @@ export default function FilterBar({ Page }: FilterBarProps) {
             "🌴 Poolside",
             "👨‍👩‍👧 Family"
         ]
+        type = "Hotel"
     } else if (Page === "Theme Park") {
         message = "Search activities by name or feature..."
         PicksList = [
@@ -28,6 +32,7 @@ export default function FilterBar({ Page }: FilterBarProps) {
             "🍽️ Dining",
             "🧸 Kids"
         ]
+        type = "Activity"
     } else if (Page === "Ferry") {
         message = "Search routes by name or feature..."
         PicksList = [
@@ -37,6 +42,7 @@ export default function FilterBar({ Page }: FilterBarProps) {
             "✈️ Seaplane Routes",
             "🚀 Rocketship Routes"
         ]
+        type = "Route"
     }
     return (
         <div className="bg-white border-[#C0E4E4] border-2 rounded-2xl px-5 py-3 gap-5">
@@ -55,6 +61,11 @@ export default function FilterBar({ Page }: FilterBarProps) {
                         {pick}
                     </button>
                 ))}
+                {Create && (
+                    <button onClick={onCreateClick} className="py-2 px-4 bg-[#0E7490] text-white rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer ml-auto">
+                        Create New {type}
+                    </button>
+                )}
             </div>
         </div>
     )

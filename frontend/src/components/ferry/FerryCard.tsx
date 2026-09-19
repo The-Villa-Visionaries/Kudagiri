@@ -1,6 +1,15 @@
 import starSVG from "../../assets/icons/star.svg"
 
-export default function FerryCard() {
+interface FerryCardProps {
+    role?: string
+    edit?: boolean
+    onClick?: () => void
+}
+
+export default function FerryCard({ role, edit, onClick }: FerryCardProps) {
+    const allowAccess = role === "Admin" || role === "Ferry-Operator"
+    let buttonText = allowAccess ? "Select" : "Book Now"
+    buttonText = edit ? "Edit Route" : buttonText
     return (
         <div className="w-[calc(50%-10px)] bg-white rounded-2xl overflow-hidden group">
             <div className="relative w-full h-48 overflow-hidden bg-linear-to-r from-[#0E7490] to-[#06B6D3]">
@@ -21,7 +30,7 @@ export default function FerryCard() {
                         <h3 className="text-2xl font-bold">$0.01</h3>
                         <p className="text-sm">/way</p>
                     </div>
-                    <button className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">Buy Now</button>
+                    <button onClick={onClick} className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>
                 </div>
             </div>
         </div>

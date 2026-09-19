@@ -4,15 +4,17 @@ import clockSVG from "../../assets/icons/clock.svg"
 import locationSVG from "../../assets/icons/location.svg"
 import dangerSVG from "../../assets/icons/danger.svg"
 import doubleSVG from "../../assets/icons/double.svg"
-import justButtSVG from "../../assets/icons/justButt.svg"
 
 interface ThemeCardProps {
     role?: string
+    edit?: boolean
+    onClick?: () => void
 }
 
-export default function ThemeCard({ role }: ThemeCardProps) {
+export default function ThemeCard({ role, edit, onClick }: ThemeCardProps) {
     const allowAccess = role === "Admin" || role === "Ticketing-Staff"
-    const buttonText = allowAccess ? "Select" : "Book Now"
+    let buttonText = allowAccess ? "Select" : "Book Now"
+    buttonText = edit ? "Edit Activity" : buttonText
     return (
         <div className="w-[calc(50%-10px)] bg-white rounded-2xl overflow-hidden group">
             <div className=" relative w-full h-48 overflow-hidden bg-linear-to-r from-[#0E7490] to-[#06B6D3]">
@@ -51,7 +53,7 @@ export default function ThemeCard({ role }: ThemeCardProps) {
                         <h3 className="text-2xl font-bold">$34.50</h3>
                         <p className="text-sm">/person</p>
                     </div>
-                    <button className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>
+                    <button onClick={onClick} className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>
                 </div>
             </div>
         </div>

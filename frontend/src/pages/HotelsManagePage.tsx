@@ -1,41 +1,39 @@
+import { useNavigate, useSearchParams } from "react-router-dom"
 import Header from "../components/common/Header"
-import EventBanner from "../components/promotions/EventsBanner"
+import PageIndex from "../components/common/PageIndex"
 import PageTitle from "../components/common/PageTitle"
 import FilterBar from "../components/common/FilterBar"
-import PageIndex from "../components/common/PageIndex"
-import FerryGrid from "../components/ferry/FerryGrid"
-import Cart from "../components/ferry/Cart"
 import { useEffect, useState } from "react"
-import { useNavigate, useSearchParams } from "react-router-dom"
-import Validation from "../components/ferry/Validation"
+import RoomGrid from "../components/hotels/RoomGrid"
+import Edit from "../components/hotels/Edit"
+import Create from "../components/hotels/Create"
 
 export default function Main() {
     const navigation = useNavigate();
     const [searchParams] = useSearchParams()
+    const [switchState, setSwitchState] = useState(true)
 
     const role = searchParams.get("role") || "Visitor"
-    const allowAccess = role === "Admin" || role === "Ferry-Operator"
+    const allowAccess = role === "Admin" || role === "Hotel-Staff"
     useEffect(() => {
         if (!allowAccess) {
-            navigation("/ferry")
+            navigation("/Hotels")
         }
     }, [allowAccess, navigation])
 
-    const title = "Ferry Routes"
-    const description = "Book your island transit — smooth ferry trips, seaplanes, and direct routes await"
-    const sideBar = allowAccess ? <Validation /> : <Cart />
+    const title = "Manage Hotels"
+    const description = "Control room inventories, manage guest reservations, and configure promotional offers"
     return (
         <div className="relative w-full h-full bg-[#F0FAFA] bg-[radial-gradient(#4bc0ad_1px,transparent_1px)] [background-size:16px_16px] px-9 py-4 flex flex-col gap-4 mt-16">
             <Header />
-            <EventBanner />
             <PageTitle title={title} description={description} />
-            <FilterBar Page="Ferry" />
+            <FilterBar Page="Hotels" Create={true} onCreateClick={() => setSwitchState(true)} />
             <div className="w-full flex items-start justify-between">
                 <div className="min-w-4/6">
-                    <FerryGrid role={role} />
+                    <RoomGrid role={role} edit={true} onClick={() => setSwitchState(false)} />
                     <PageIndex />
                 </div>
-                {sideBar}
+                {switchState ? <Create /> : <Edit />}
             </div>
         </div>
     )

@@ -5,7 +5,16 @@ import roomsizeSVG from "../../assets/icons/room_size.svg"
 import RoomCardSpecs from "./RoomCardSpecs"
 import RoomCardTag from "./RoomCardTag"
 
-export default function RoomsCard() {
+interface ThemeCardProps {
+    role?: string
+    edit?: boolean
+    onClick?: () => void
+}
+
+export default function RoomsCard({ role, edit, onClick }: ThemeCardProps) {
+    const allowAccess = role === "Admin" || role === "Hotel-Staff"
+    let buttonText = allowAccess ? "Select" : "Book Now"
+    buttonText = edit ? "Edit Hotel" : buttonText
     return (
         <div className="w-[calc(50%-10px)] bg-white rounded-2xl overflow-hidden group">
             <div className="relative w-full h-48 overflow-hidden bg-linear-to-r from-[#0E7490] to-[#06B6D3]">
@@ -40,7 +49,7 @@ export default function RoomsCard() {
                         <h3 className="text-2xl font-bold">$780</h3>
                         <p className="text-sm">/night</p>
                     </div>
-                    <button className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">Book Now</button>
+                    <button onClick={onClick} className="bg-[#0E7490] text-white px-4 py-2 rounded-full font-bold hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>
                 </div>
             </div>
         </div>

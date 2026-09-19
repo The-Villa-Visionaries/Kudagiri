@@ -15,7 +15,7 @@ export default function Cart() {
                     <p className="text-sm text-center">Choose an Route from the list to get started</p>
                 </div>
                 <div className="w-full flex flex-col gap-4">
-                    <InputBox icon={promoSVG} label="Promo Code" placeholder="Enter promo code" />
+                    <InputBox icon={promoSVG} label="Promo Code" placeholder="Enter promo code" buttonText="Redeem" />
                     <CardRow title="Subtotal" attribute="$0.00" />
                     <CardRow title="Discount" attribute="-$10.00" />
                     <CardRow title="Tax (8%)" attribute="$0.00" />
