@@ -31,10 +31,12 @@ export default function RoomsCard({ role, edit, onClick, hotels }: ThemeCardProp
     let buttonText = allowAccess ? "Select" : "Book Now"
     buttonText = edit ? "Edit Hotel" : buttonText
     const amenitites = hotels?.amenities.split(',').map(item => item.trim())
+    const imagePath = hotels?.image?.startsWith('/') ? hotels?.image : `/${hotels?.image}`
+    const imgSrc = hotels?.image ? `http://localhost:8000${imagePath}` : ''
     return (
         <div className="w-[calc(50%-10px)] bg-white rounded-2xl overflow-hidden group">
             <div className="relative w-full h-48 overflow-hidden bg-linear-to-r from-[#0E7490] to-[#06B6D3]">
-                <img src="https://five-star-alliance.s3.amazonaws.com/field/image/nodes/2017/45956/0_villa-G.jpg" className="w-full h-48 object-cover transition-transform duration-500 ease-in-out group-hover:scale-110 hover:cursor-pointer"/>
+                <img src={imgSrc} className="w-full h-48 object-cover transition-transform duration-500 ease-in-out group-hover:scale-110 hover:cursor-pointer"/>
             </div>
             <div className="p-4"> 
                 <div className="flex items-center justify-between mb-2">
@@ -51,10 +53,11 @@ export default function RoomsCard({ role, edit, onClick, hotels }: ThemeCardProp
                     <RoomCardSpecs icon={bedSVG} text={hotels?.bedType ?? ''} />
                 </div>
                 <div className="flex items-center gap-2 mt-2">
-                    <RoomCardTag text="Plunge Pool" />
-                    <RoomCardTag text="Butler Service" />
-                    <RoomCardTag text="WiFi" />
-                    <RoomCardTag text="+2 more" />
+                    {
+                        amenitites?.slice(0, 3).map((amenity, index) => (
+                            <RoomCardTag key={index} text={amenity} />
+                        ))
+                    }
                 </div>
                 <div className="bg-[#FFFBEB] border border-[#FDE998] text-white p-1 px-2 rounded-full mt-2 w-fit">
                     <p className="text-[#B6570F] text-sm font-medium">{hotels?.offers}</p>

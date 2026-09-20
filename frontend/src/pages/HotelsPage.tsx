@@ -23,17 +23,16 @@ export default function Main() {
                     body: JSON.stringify({ requestId: userId })
                 });
                 if (response.ok) {
-                    const data = await response.json();
-                    setHotels(data.hotels);
-                    setPromotions(data.promotions);
+                    const data = await response.json()
+                    setHotels(data.hotels)
+                    setPromotions(data.promotions)
                 }
             } catch (error) {
-                console.error('Error loading page:', error);
+                console.error('Error loading page:', error)
             }
         }
-        fetchHotelPage();
-    }, []);
-
+        fetchHotelPage()
+    }, [])
     return (
         <div className="relative w-full h-full bg-[#F0FAFA] bg-[radial-gradient(#4bc0ad_1px,transparent_1px)] [background-size:16px_16px] px-9 py-4 flex flex-col gap-4 mt-16">
             <Header />

@@ -30,10 +30,9 @@ export default function RoomsGrid({ role, edit, onClick, hotels }: RoomGridProps
                 <p className="text-[#558282] text-sm bg-[#F0FAFA]">Showing: 1-10 of {totalHotels}</p>
             </div>
             <div className="flex flex-wrap gap-5 justify-between">
-                <RoomCard role={role} edit={edit} onClick={onClick} />
-                <RoomCard role={role} edit={edit} onClick={onClick} />
-                <RoomCard role={role} edit={edit} onClick={onClick} />
-                <RoomCard role={role} edit={edit} onClick={onClick} />
+                {hotels.map((hotel, index) => (
+                    <RoomCard key={index} role={role} edit={edit} onClick={onClick} hotels={hotel} />
+                ))}
             </div>
         </div>
     )
