@@ -1,6 +1,7 @@
 from fastapi import File, Form, UploadFile
 from pydantic import BaseModel
 from dataclasses import dataclass
+from typing import Optional
 
 class FetchAllHotels(BaseModel):
     requestId:int
@@ -12,25 +13,35 @@ class BookHotel(BaseModel):
     checkInDate:str
     checkOutDate:str
     numGuests:int
-    promoCode:str
+    promoCode:Optional[str] = None
 
 @dataclass
 class MakeHotels:
     name:str = Form()
     description:str = Form()
     price:int = Form()
-    rating:int = Form()
     capacity:int = Form()
     roomSize:str = Form()
     bedType:str = Form()
     amenities:str = Form()
-    offers:str = Form()
-    guests:int = Form()
+    offers: Optional[str] = Form()
     image:UploadFile = File()
 
 class CheckHotelBooking(BaseModel):
     requestId:int
     userId:int
+
+class UpdateHotel(BaseModel):
+    requestId:int
+    name:str
+    newName:str
+    description:str
+    price:int
+    capacity:int
+    roomSize:str
+    bedType:str
+    amenities:Optional[str] = None
+    offers:Optional[str] = None
 
 class FetchAllFerry(BaseModel):
     requestId:int
@@ -44,7 +55,6 @@ class MakeFerry:
     name:str = Form()
     description:str = Form()
     price:int = Form()
-    rating:int = Form()
     duration:str = Form()
     image:UploadFile = File()
 
@@ -55,14 +65,12 @@ class BookThemeParks(BaseModel):
     requestId:int
     themeParkId:int
     price:float
-    ticketCode:str
 
 @dataclass
 class MakeThemeParks:
     name:str = Form()
     description:str = Form()
     price:int = Form()
-    rating:int = Form()
     duration:str = Form()
     location:str = Form()
     ageLimit:str = Form()
@@ -93,12 +101,11 @@ class MakeEvents:
 
 class GenerateTicket(BaseModel):
     requestId:int
-    type:str 
+    type:Optional[str] = None
     typeId:int
     price:float
-    ticketCode:str
 
 class CheckTicket(BaseModel):
     requestId:int
+    type:Optional[str] = None
     ticketCode:str
-    type:str

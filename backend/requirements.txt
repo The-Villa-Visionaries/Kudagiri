@@ -16,3 +16,6 @@ PyJWT>=2.10,<3
 
 pytest>=8.0,<10
 httpx>=0.27,<0.29
+
+# Seeding & Testing
+Pillow>=10.0,<11

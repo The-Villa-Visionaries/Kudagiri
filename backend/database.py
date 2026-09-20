@@ -39,7 +39,6 @@ def ConnectDatabase():
         bedType :STRING
         amenities :STRING
         offers :STRING
-        guests :INTEGER
         image :STRING
 
     hotel_booking
@@ -145,7 +144,6 @@ def InitializeDatabase():
             bedType TEXT NOT NULL,
             amenities TEXT NOT NULL,
             offers TEXT NOT NULL,
-            guests INTEGER NOT NULL,
             image TEXT NOT NULL)''')
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS hotel_booking (

@@ -1,4 +1,5 @@
 import os
+from fastapi import HTTPException
 from database import ConnectDatabase
 from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket
 
@@ -30,15 +31,15 @@ async def CreateHotel(data:MakeHotels):
     with ConnectDatabase() as conn:
         cursor = conn.cursor()
         if not str(data.image.filename).lower().endswith(ALLOWED_EXTENSIONS):
-            return {'message': 'Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.'}
+            raise HTTPException(status_code=400, detail='Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.')
         fileExtension: str = os.path.splitext(str(data.image.filename))[1].lstrip('.')
         filePath: str = os.path.join(f'{STATIC_DIRECTORY}/hotel', f'{data.name}.{fileExtension}')
         with open(filePath, 'wb') as file:
             file.write(await data.image.read())
         cursor.execute('''
-            INSERT INTO hotel (name, description, price, rating, capacity, roomSize, bedType, amenities, offers, guests, image)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', 
-            (data.name, data.description, data.price, data.rating, data.capacity, data.roomSize, data.bedType, data.amenities, data.offers, data.guests, filePath))
+            INSERT INTO hotel (name, description, price, capacity, roomSize, bedType, amenities, offers, image)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''', 
+            (data.name, data.description, data.price, data.capacity, data.roomSize, data.bedType, data.amenities, data.offers, filePath))
         conn.commit()
         return data.name
 
@@ -46,20 +47,25 @@ def CheckHotelBooked(data):
     with ConnectDatabase() as conn:
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT userId 
+            SELECT hotelId 
             FROM hotel_booking 
             WHERE userId = ?''', (data.userId,))
-        hotel = cursor.fetchall()
-        if not hotel:
+        hotelId = cursor.fetchone()
+        if not hotelId:
             return {'message': 'User not valid.'}
-        return data.requestId
+        cursor.execute('''
+            SELECT name 
+            FROM hotel 
+            WHERE hotelId = ?''', (hotelId[0],))
+        hotel = cursor.fetchone()
+        return hotel[0]
 
 async def UpdateHotel(data:MakeHotels):
     with ConnectDatabase() as conn:
         cursor = conn.cursor()
         if data.image:
             if not str(data.image.filename).lower().endswith(ALLOWED_EXTENSIONS):
-                return {'message': 'Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.'}
+                raise HTTPException(status_code=400, detail='Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.')
             cursor.execute('SELECT image FROM hotel WHERE name = ?', (data.name,))
             oldImage = cursor.fetchone()
             if oldImage:
@@ -70,14 +76,25 @@ async def UpdateHotel(data:MakeHotels):
                 file.write(await data.image.read())
             cursor.execute('''
                 UPDATE hotel 
-                SET name = ?, description = ?, price = ?, rating = ?, capacity = ?, roomSize = ?, bedType = ?, amenities = ?, offers = ?, guests = ?, image = ?
+                SET name = ?, description = ?, price = ?, capacity = ?, roomSize = ?, bedType = ?, amenities = ?, offers = ?, image = ?
                 WHERE name = ?''', 
-                (data.name, data.description, data.price, data.rating, data.capacity, data.roomSize, data.bedType, data.amenities, data.offers, data.guests, filePath, data.name))
+                (data.name, data.description, data.price, data.capacity, data.roomSize, data.bedType, data.amenities, data.offers, filePath, data.name))
         else:
             cursor.execute('''
                 UPDATE hotel 
-                SET name = ?, description = ?, price = ?, rating = ?, capacity = ?, roomSize = ?, bedType = ?, amenities = ?, offers = ?, guests = ?
+                SET name = ?, description = ?, price = ?, capacity = ?, roomSize = ?, bedType = ?, amenities = ?, offers = ?
                 WHERE name = ?''', 
-                (data.name, data.description, data.price, data.rating, data.capacity, data.roomSize, data.bedType, data.amenities, data.offers, data.guests, data.name))
+                (data.name, data.description, data.price, data.capacity, data.roomSize, data.bedType, data.amenities, data.offers, data.name))
         conn.commit()
         return data.name
+
+def DeleteHotel(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT image FROM hotel WHERE name = ?', (data.name,))
+        oldImage = cursor.fetchone()
+        if oldImage:
+            os.remove(oldImage[0])
+        cursor.execute('DELETE FROM hotel WHERE name = ?', (data.name,))
+        conn.commit()
+    return {'message': f'Hotel {data.name} deleted successfully'}

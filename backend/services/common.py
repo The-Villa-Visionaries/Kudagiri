@@ -1,4 +1,5 @@
-import os
+import os, secrets
+from fastapi import HTTPException
 from database import ConnectDatabase
 from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket
 
@@ -23,6 +24,23 @@ def CreatePromotion(data):
         conn.commit()
         return data.name
 
+def UpdatePromotion(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE promotion 
+            SET name = ?, description = ?, offer = ?, promoCode = ?, fromDate = ?, toDate = ?
+            WHERE name = ?''', (data.name, data.description, data.offer, data.promoCode, data.fromDate, data.toDate, data.name))
+        conn.commit()
+        return data.name
+
+def DeletePromotion(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM promotion WHERE name = ?', (data.name,))
+        conn.commit()
+    return data.name
+
 # Event Functions
 def GetAllEvents(data):
     with ConnectDatabase() as conn:
@@ -37,7 +55,7 @@ async def CreateEvent(data:MakeEvents):
     with ConnectDatabase() as conn:
         cursor = conn.cursor()
         if not str(data.image.filename).lower().endswith(ALLOWED_EXTENSIONS):
-            return {'message': 'Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.'}
+            raise HTTPException(status_code=400, detail='Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.')
         fileExtension: str = os.path.splitext(str(data.image.filename))[1].lstrip('.')
         filePath: str = os.path.join(f'{STATIC_DIRECTORY}/event', f'{data.name}.{fileExtension}')
         with open(filePath, 'wb') as file:
@@ -49,22 +67,54 @@ async def CreateEvent(data:MakeEvents):
         conn.commit()
     return data.name
 
+async def UpdateEvent(data:MakeEvents):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        if data.image:
+            if not str(data.image.filename).lower().endswith(ALLOWED_EXTENSIONS):
+                raise HTTPException(status_code=400, detail='Invalid file type. Only JPG, JPEG, PNG, and WEBP files are allowed.')
+            fileExtension: str = os.path.splitext(str(data.image.filename))[1].lstrip('.')
+            filePath: str = os.path.join(f'{STATIC_DIRECTORY}/event', f'{data.name}.{fileExtension}')
+            with open(filePath, 'wb') as file:
+                file.write(await data.image.read())
+            cursor.execute('''
+                UPDATE event 
+                SET name = ?, description = ?, buttonText = ?, tag = ?, image = ?
+                WHERE name = ?''', (data.name, data.description, data.buttonText, data.tag, filePath, data.name))
+        else:
+            cursor.execute('''
+                UPDATE event 
+                SET name = ?, description = ?, buttonText = ?, tag = ?
+                WHERE name = ?''', (data.name, data.description, data.buttonText, data.tag, data.name))
+        conn.commit()
+    return data.name
+
+def DeleteEvent(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        cursor.execute('DELETE FROM event WHERE name = ?', (data.name,))
+        conn.commit()
+    return data.name
+
 # Ticket Functions
 def CreateTicket(data):
     with ConnectDatabase() as conn:
+        ticketCode = ''
         cursor = conn.cursor()
         if data.type == 'ThemePark':
+            ticketCode = f'TP-{secrets.token_hex(6)}'
             cursor.execute('''
                 INSERT INTO theme_park_booking (userId, themeParkId, price, ticketCode)
                 VALUES (?, ?, ?, ?)
-            ''', (000, data.typeId, data.price, data.ticketCode))
+            ''', (000, data.typeId, data.price, ticketCode))
         elif data.type == 'Ferry':
+            ticketCode = f'FR-{secrets.token_hex(6)}'
             cursor.execute('''
                 INSERT INTO ferry_booking (userId, ferryId, price, ticketCode)
                 VALUES (?, ?, ?, ?)
-            ''', (000, data.typeId, data.price, data.ticketCode))
+            ''', (000, data.typeId, data.price, ticketCode))
         conn.commit()
-    return data.ticketCode
+    return ticketCode
 
 def ValidateTicket(data):
     with ConnectDatabase() as conn:
@@ -81,7 +131,23 @@ def ValidateTicket(data):
                 FROM ferry_booking
                 WHERE ticketCode = ?
             ''', (data.ticketCode,))
-        tickets = cursor.fetchall()
-        if not tickets:
-            return {'isValid': False}
-        return {'isValid': True}
+        userId = cursor.fetchone()
+        if not userId:
+            raise HTTPException(status_code=400, detail='Invalid ticket code.')
+        return userId['userId']
+
+def UseTicket(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        if data.type == 'ThemePark':
+            cursor.execute('''
+                DELETE FROM theme_park_booking
+                WHERE ticketCode = ?
+            ''', (data.ticketCode,))
+        elif data.type == 'Ferry':
+            cursor.execute('''
+                DELETE FROM ferry_booking
+                WHERE ticketCode = ?
+            ''', (data.ticketCode,))
+        conn.commit()
+    return {'message': 'Ticket used successfully'}
