@@ -25,6 +25,11 @@ def FerryBooking(data):
             INSERT INTO ferry_booking (requestId, ferryId)
             VALUES (?, ?)
         ''', (data.requestId, data.ferryId))
+        cursor.execute('''
+            UPDATE ferry
+            SET totalBookings = totalBookings + 1
+            WHERE ferryId = ?
+        ''', (data.ferryId,))
         conn.commit()
     return ticketCode
 

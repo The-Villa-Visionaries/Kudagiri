@@ -11,6 +11,7 @@ interface Hotel {
     description: string
     price: number
     rating: number 
+    reviews: number
     capacity: number
     roomSize: string
     bedType: string
@@ -43,7 +44,7 @@ export default function RoomsCard({ role, edit, onClick, hotels }: ThemeCardProp
                     <h3 className="text-lg font-medium text-[#333]">{hotels?.name}</h3>
                     <div className="flex items-center text-[#558282] text-sm">
                         <img src={starSVG} alt="Room" className="w-6 h-6 inline-block mr-1"/>
-                        <p className="font-medium leading-[14px]"><span className="font-bold text-black">{hotels?.rating}</span> (312 reviews)</p>
+                        <p className="font-medium leading-[14px]"><span className="font-bold text-black">{hotels?.rating}</span> ({hotels?.reviews || 0} reviews)</p>
                     </div>
                 </div>
                 <p className="text-[#558282]">{hotels?.description}</p>

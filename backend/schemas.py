@@ -114,6 +114,10 @@ class DeleteThemeParks(BaseModel):
     requestId:int
     name:str
 
+class CheckThemeParksBookings(BaseModel):
+    requestId:Optional[int] = None
+    themeParkId:int
+
 class GenerateTicket(BaseModel):
     requestId:int
     type:Optional[str] = None
@@ -173,3 +177,8 @@ class UpdateEvents:
 class DeleteEvents(BaseModel):
     requestId:int
     name:str
+
+class Review(BaseModel):
+    requestId:int
+    type:Optional[str] = None
+    typeId:int

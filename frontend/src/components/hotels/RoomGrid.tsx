@@ -5,7 +5,8 @@ interface Hotel {
     name: string
     description: string
     price: number
-    rating: number 
+    rating: number
+    reviews: number
     capacity: number
     roomSize: string
     bedType: string
@@ -22,12 +23,12 @@ interface RoomGridProps {
 }
 
 export default function RoomsGrid({ role, edit, onClick, hotels }: RoomGridProps) {
-    const totalHotels = hotels.length
+    const totalHotels = hotels.length || 0
     return (
         <div className="mr-5.5">
             <div className="flex items-center justify-between mb-4 mx-5">
                 <p className="text-[#558282] text-sm bg-[#F0FAFA]"><span className="font-bold">{totalHotels}</span> hotels available</p>
-                <p className="text-[#558282] text-sm bg-[#F0FAFA]">Showing: 1-10 of {totalHotels}</p>
+                <p className="text-[#558282] text-sm bg-[#F0FAFA]">Showing: 1-10</p>
             </div>
             <div className="flex flex-wrap gap-5 justify-between">
                 {hotels.map((hotel, index) => (

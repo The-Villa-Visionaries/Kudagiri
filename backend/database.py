@@ -139,6 +139,8 @@ def InitializeDatabase():
             description TEXT NOT NULL, 
             price FLOAT NOT NULL,
             rating FLOAT DEFAULT 0,
+            totalBookings INTEGER DEFAULT 0,
+            reviewCount INTEGER DEFAULT 0,
             capacity INTEGER DEFAULT 0,
             roomSize TEXT NOT NULL,
             bedType TEXT NOT NULL,
@@ -166,6 +168,8 @@ def InitializeDatabase():
             price FLOAT NOT NULL,
             duration TEXT NOT NULL,
             rating FLOAT DEFAULT 0,
+            reviewCount INTEGER DEFAULT 0,
+            totalBookings INTEGER DEFAULT 0,
             image TEXT NOT NULL)''')
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS ferry_booking (
@@ -187,6 +191,8 @@ def InitializeDatabase():
             ageLimit TEXT NOT NULL, 
             capacity INTEGER DEFAULT 0, 
             rating FLOAT DEFAULT 0,
+            reviewCount INTEGER DEFAULT 0,
+            totalBookings INTEGER DEFAULT 0,
             image TEXT NOT NULL)''')
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS theme_park_booking (

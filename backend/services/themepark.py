@@ -22,6 +22,11 @@ def ThemeParkBooking(data):
             INSERT INTO theme_park_booking (userId, themeParkId, price, ticketCode)
             VALUES (?, ?, ?, ?)
         ''', (data.requestId, data.themeParkId, data.price, ticketCode))
+        cursor.execute('''
+            UPDATE theme_park
+            SET totalBookings = totalBookings + 1
+            WHERE themeParkId = ?
+        ''', (data.themeParkId,))
         conn.commit()   
     return ticketCode
 
@@ -68,3 +73,13 @@ def DeleteThemePark(data):
         cursor.execute('DELETE FROM theme_park WHERE name = ?', (data.name,))
         conn.commit()
     return data.name
+
+def CheckNumberOfBookings(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT COUNT(*) 
+            FROM theme_park_booking 
+            WHERE themeParkId = ?''', (data.themeParkId,))
+        bookingCount = cursor.fetchone()[0]
+        return bookingCount

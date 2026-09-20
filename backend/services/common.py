@@ -151,3 +151,30 @@ def UseTicket(data):
             ''', (data.ticketCode,))
         conn.commit()
     return {'message': 'Ticket used successfully'}
+
+def GiveReview(data):
+    with ConnectDatabase() as conn:
+        cursor = conn.cursor()
+        if data.type == 'Hotel':
+            cursor.execute('''
+                UPDATE hotel
+                SET rating = CAST((reviewCount + 1) AS FLOAT) / NULLIF(totalBookings, 0) * 100,
+                    reviewCount = reviewCount + 1
+                WHERE hotelId = ?
+            ''', (data.typeId,))
+        elif data.type == 'ThemePark':
+            cursor.execute('''
+                UPDATE theme_park
+                SET rating = CAST((reviewCount + 1) AS FLOAT) / NULLIF(totalBookings, 0) * 100,
+                    reviewCount = reviewCount + 1
+                WHERE themeParkId = ?
+            ''', (data.typeId,))
+        elif data.type == 'Ferry':
+            cursor.execute('''
+                UPDATE ferry
+                SET rating = CAST((reviewCount + 1) AS FLOAT) / NULLIF(totalBookings, 0) * 100,
+                    reviewCount = reviewCount + 1
+                WHERE ferryId = ?
+            ''', (data.typeId,))
+        conn.commit()
+    return {'message': 'Review submitted successfully'}

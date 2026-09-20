@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from services.common import GetAllPromotions, CreatePromotion, GetAllEvents, CreateEvent, CreateTicket, ValidateTicket, DeletePromotion, DeleteEvent, UpdatePromotion, UpdateEvent
+from services.common import GetAllPromotions, CreatePromotion, GetAllEvents, CreateEvent, CreateTicket, ValidateTicket, DeletePromotion, DeleteEvent, UpdatePromotion, UpdateEvent, GiveReview
 from services.hotel import GetAllHotels, HotelBooking, CreateHotel, CheckHotelBooked, UpdateHotel, DeleteHotel
 from services.ferry import GetAllFerry, FerryBooking, CreateFerry, UpdateFerry, DeleteFerry
-from services.themepark import GetThemePark, ThemeParkBooking, CreateThemePark, UpdateThemePark, DeleteThemePark
-from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket, UpdateHotels, DeleteHotels, EditFerry, DelFerry, UpdateThemeParks, DeleteThemeParks, UpdatePromo, DeletePromo, UpdateEvents, DeleteEvents 
+from services.themepark import CheckNumberOfBookings, GetThemePark, ThemeParkBooking, CreateThemePark, UpdateThemePark, DeleteThemePark
+from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket, Review, UpdateHotels, DeleteHotels, EditFerry, DelFerry, UpdateThemeParks, DeleteThemeParks, UpdatePromo, DeletePromo, UpdateEvents, DeleteEvents, CheckThemeParksBookings 
 
 router = APIRouter()
 
@@ -27,6 +27,12 @@ def BookHotelResponse(data:BookHotel):
 def CheckHotelBookingResponse(data:CheckHotelBooking):
     userId = CheckHotelBooked(data)
     return {'userId': userId}
+
+@router.post('/api/hotel/review', tags=['Hotel Page'], status_code=200)
+def GiveHotelReview(data:Review):
+    data.type = 'Hotel'
+    GiveReview(data)
+    return {'message': 'Review submitted successfully'}
 
 @router.post('/api/hotel/create', tags=['Manage Hotel Page'], status_code=200)
 async def CreateHotelResponse(data:MakeHotels = Depends()):
@@ -51,7 +57,7 @@ def FetchFerryPage(data:FerryPage):
     events = GetAllEvents(data)
     if not ferryList and not events:
         raise HTTPException(status_code=404, detail='No content found')
-    return {'ferries': ferryList, 'events': events}
+    return {'ferry': ferryList, 'events': events}
 
 @router.post('/api/ferry/book', tags=['Ferry Page'], status_code=200)
 def BookFerryResponse(data:BookFerry):
@@ -69,6 +75,12 @@ def CheckFerryTicket(data:CheckTicket):
     data.type = 'Ferry'
     isValid = ValidateTicket(data)
     return {'isValid': isValid}
+
+@router.post('/api/ferry/review', tags=['Ferry Page'], status_code=200)
+def GiveFerryReview(data:Review):
+    data.type = 'Ferry'
+    GiveReview(data)
+    return {'message': 'Review submitted successfully'}
 
 @router.post('/api/ferry/create', tags=['Manage Ferry Page'], status_code=200)
 async def CreateFerryResponse(data:MakeFerry = Depends()):
@@ -93,7 +105,7 @@ def FetchThemeParkPage(data:ThemeParkPage):
     themeParkList = GetThemePark(data)
     if not themeParkList and not events:
         raise HTTPException(status_code=404, detail='No content found')
-    return {'themeParks': themeParkList, 'events': events}
+    return {'themePark': themeParkList, 'events': events}
 
 @router.post('/api/theme-park/book', tags=['Theme Park Page'], status_code=200)
 def BookThemeParkResponse(data:BookThemeParks):
@@ -112,6 +124,12 @@ def CheckThemeParkTicket(data:CheckTicket):
     userId = ValidateTicket(data)
     return {'userId': userId}
 
+@router.post('/api/theme-park/review', tags=['Theme Park Page'], status_code=200)
+def GiveThemeParkReview(data:Review):
+    data.type = 'ThemePark'
+    GiveReview(data)
+    return {'message': 'Review submitted successfully'}
+
 @router.post('/api/theme-park/create', tags=['Manage Theme Park Page'], status_code=200)
 async def CreateThemeParkResponse(data:MakeThemeParks = Depends()):
     themeParkName = await CreateThemePark(data)
@@ -126,6 +144,11 @@ async def UpdateThemeParkResponse(data:MakeThemeParks = Depends()):
 def DeleteThemeParkResponse(data:MakeThemeParks):
     themeParkName = DeleteThemePark(data)
     return {'message': f'Theme park {themeParkName} deleted successfully'}
+
+@router.post('/api/theme-park/bookings', tags=['Manage Theme Park Page'], status_code=200)
+def CheckThemeParkBookingsResponse(data:CheckThemeParksBookings):
+    bookingCount = CheckNumberOfBookings(data)
+    return {'bookingCount': bookingCount}
 
 @router.post('/api/promotion/create', tags=['Manage Promotion Page'], status_code=200)
 def CreatePromotionResponse(data:MakePromo):

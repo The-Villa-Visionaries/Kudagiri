@@ -25,6 +25,12 @@ def HotelBooking(data):
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', (data.requestId, data.hotelId, data.price, data.checkInDate, data.checkOutDate, data.numGuests, data.promoCode))
         conn.commit()
+        cursor.execute('''
+            UPDATE hotel
+            SET totalBookings = totalBookings + 1
+            WHERE hotelId = ?
+        ''', (data.hotelId,))
+        conn.commit()
     return None
 
 async def CreateHotel(data:MakeHotels):
