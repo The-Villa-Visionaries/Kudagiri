@@ -84,10 +84,11 @@ Open that address in a web browser.
 ## Default Test Users
 | Username | Role | Email | Password |
 |---|---|---|---|
-| NighRaven | Admin | nightraven@example.com | 1 |
-| Livv | User |livv@example.com | 2 |
-| Naushyn | User |naushyn@example.com | 3 |
-| Jinaah | User | jinaah@example.com | 4 |
+| NighRaven | Admin | nightraven@kudagiri.mv | 1 |
+| Livv | Hotel Staff |livv@kudagiri.mv | 2 |
+| Naushyn | Ticketing Staff |naushyn@kudagiri.mv | 3 |
+| Jinaah | Ferry Staff | jinaah@kudagiri.mv | 4 |
+| User | Visitor | user@gmail.com | 5 |
 
 ## Main Features
 User registration and login <br>

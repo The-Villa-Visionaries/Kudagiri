@@ -4,7 +4,7 @@ from services.common import GetAllPromotions, CreatePromotion, GetAllEvents, Cre
 from services.hotel import GetAllHotels, HotelBooking, CreateHotel, CheckHotelBooked, UpdateHotel, DeleteHotel
 from services.ferry import GetAllFerry, FerryBooking, CreateFerry, UpdateFerry, DeleteFerry
 from services.themepark import GetThemePark, ThemeParkBooking, CreateThemePark, UpdateThemePark, DeleteThemePark
-from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket
+from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket, UpdateHotels, DeleteHotels, EditFerry, DelFerry, UpdateThemeParks, DeleteThemeParks, UpdatePromo, DeletePromo, UpdateEvents, DeleteEvents 
 
 router = APIRouter()
 
@@ -34,12 +34,12 @@ async def CreateHotelResponse(data:MakeHotels = Depends()):
     return {'message': f'Hotel {hotelName} created successfully'}
 
 @router.post('/api/hotel/update', tags=['Manage Hotel Page'], status_code=200)
-async def UpdateHotelBookingResponse(data:MakeHotels = Depends()):
+async def UpdateHotelBookingResponse(data:UpdateHotels = Depends()):
     hotelName = await UpdateHotel(data)
     return {'message': f'Hotel {hotelName} booking updated successfully'}
 
 @router.post('/api/hotel/delete', tags=['Manage Hotel Page'], status_code=200)
-def DeleteHotelResponse(data:MakeHotels):
+def DeleteHotelResponse(data:DeleteHotels):
     hotelName = DeleteHotel(data)
     return {'message': f'Hotel {hotelName} deleted successfully'}
 
@@ -76,12 +76,12 @@ async def CreateFerryResponse(data:MakeFerry = Depends()):
     return {'message': f'Ferry {ferryName} created successfully'}
 
 @router.post('/api/ferry/update', tags=['Manage Ferry Page'], status_code=200)
-async def UpdateFerryResponse(data:MakeFerry = Depends()):
+async def UpdateFerryResponse(data:EditFerry = Depends()):
     ferryName = await UpdateFerry(data)
     return {'message': f'Ferry {ferryName} updated successfully'}
 
 @router.post('/api/ferry/delete', tags=['Manage Ferry Page'], status_code=200)
-def DeleteFerryResponse(data:MakeFerry):
+def DeleteFerryResponse(data:DelFerry):
     ferryName = DeleteFerry(data)
     return {'message': f'Ferry {ferryName} deleted successfully'}
 
@@ -133,12 +133,12 @@ def CreatePromotionResponse(data:MakePromo):
     return {'message': f'Promotion {promotionName} created successfully'}
 
 @router.post('/api/promotion/update', tags=['Manage Promotion Page'], status_code=200)
-def UpdatePromotionResponse(data:MakePromo):
+def UpdatePromotionResponse(data:UpdatePromo):
     promotionName = UpdatePromotion(data)
     return {'message': f'Promotion {promotionName} updated successfully'}
 
 @router.post('/api/promotion/delete', tags=['Manage Promotion Page'], status_code=200)
-def DeletePromotionResponse(data:MakePromo):
+def DeletePromotionResponse(data:DeletePromo):
     promotionName = DeletePromotion(data)
     return {'message': f'Promotion {promotionName} deleted successfully'}
 
@@ -148,11 +148,11 @@ async def CreateEventResponse(data:MakeEvents = Depends()):
     return {'message': f'Event {eventName} created successfully'}
 
 @router.post('/api/event/update', tags=['Manage Event Page'], status_code=200)
-async def UpdateEventResponse(data:MakeEvents = Depends()):
+async def UpdateEventResponse(data:UpdateEvents = Depends()):
     eventName = await UpdateEvent(data)
     return {'message': f'Event {eventName} updated successfully'}
 
 @router.post('/api/event/delete', tags=['Manage Event Page'], status_code=200)
-def DeleteEventResponse(data:MakeEvents):
+def DeleteEventResponse(data:DeleteEvents):
     eventName = DeleteEvent(data)
     return {'message': f'Event {eventName} deleted successfully'}

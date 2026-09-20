@@ -15,6 +15,10 @@ class BookHotel(BaseModel):
     numGuests:int
     promoCode:Optional[str] = None
 
+class CheckHotelBooking(BaseModel):
+    requestId:int
+    userId:int
+
 @dataclass
 class MakeHotels:
     name:str = Form()
@@ -27,21 +31,23 @@ class MakeHotels:
     offers: Optional[str] = Form()
     image:UploadFile = File()
 
-class CheckHotelBooking(BaseModel):
-    requestId:int
-    userId:int
+@dataclass
+class UpdateHotels:
+    requestId:int = Form()
+    name:str = Form()
+    newName:str = Form()
+    description:str = Form()
+    price:int = Form()
+    capacity:int = Form()
+    roomSize:str = Form()
+    bedType:str = Form()
+    amenities:str = Form()
+    offers: Optional[str] = Form()
+    image:Optional[UploadFile] = File()
 
-class UpdateHotel(BaseModel):
+class DeleteHotels(BaseModel):
     requestId:int
     name:str
-    newName:str
-    description:str
-    price:int
-    capacity:int
-    roomSize:str
-    bedType:str
-    amenities:Optional[str] = None
-    offers:Optional[str] = None
 
 class FetchAllFerry(BaseModel):
     requestId:int
@@ -57,6 +63,20 @@ class MakeFerry:
     price:int = Form()
     duration:str = Form()
     image:UploadFile = File()
+
+@dataclass
+class EditFerry:
+    requestId:int = Form()
+    name:str = Form()
+    newName:str = Form()
+    description:str = Form()
+    price:int = Form()
+    duration:str = Form()
+    image:Optional[UploadFile] = File()
+
+class DelFerry(BaseModel):
+    requestId:int
+    name:str
 
 class FetchAllThemeParks(BaseModel):
     requestId:int
@@ -77,6 +97,34 @@ class MakeThemeParks:
     capacity:int = Form()
     image:UploadFile = File()
 
+@dataclass
+class UpdateThemeParks:
+    requestId:int = Form()
+    name:str = Form()
+    newName:str = Form()
+    description:str = Form()
+    price:int = Form()
+    duration:str = Form()
+    location:str = Form()
+    ageLimit:str = Form()
+    capacity:int = Form()
+    image:Optional[UploadFile] = File()
+
+class DeleteThemeParks(BaseModel):
+    requestId:int
+    name:str
+
+class GenerateTicket(BaseModel):
+    requestId:int
+    type:Optional[str] = None
+    typeId:int
+    price:float
+
+class CheckTicket(BaseModel):
+    requestId:int
+    type:Optional[str] = None
+    ticketCode:str
+
 class FetchAllPromos(BaseModel):
     requestId:int
 
@@ -87,6 +135,19 @@ class MakePromo(BaseModel):
     promoCode:str
     fromDate:str
     toDate:str
+
+class UpdatePromo(BaseModel):
+    requestId:int
+    name:str
+    description:str
+    offer:str
+    promoCode:str
+    fromDate:str
+    toDate:str
+
+class DeletePromo(BaseModel):
+    requestId:int
+    name:str
 
 class FetchAllEvents(BaseModel):
     requestId:int
@@ -99,13 +160,16 @@ class MakeEvents:
     tag:str = Form()
     image:UploadFile = File()
 
-class GenerateTicket(BaseModel):
-    requestId:int
-    type:Optional[str] = None
-    typeId:int
-    price:float
+@dataclass
+class UpdateEvents:
+    requestId:int = Form()
+    name:str = Form()
+    newName:str = Form()
+    description:str = Form()
+    buttonText:str = Form()
+    tag:str = Form()
+    image:Optional[UploadFile] = File()
 
-class CheckTicket(BaseModel):
+class DeleteEvents(BaseModel):
     requestId:int
-    type:Optional[str] = None
-    ticketCode:str
+    name:str

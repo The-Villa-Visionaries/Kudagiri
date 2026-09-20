@@ -1,9 +1,7 @@
-import secrets
-
+import os, secrets
 from fastapi import HTTPException
-import os
 from database import ConnectDatabase
-from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket
+from schemas import FetchAllHotels, BookHotel, MakeHotels, FetchAllFerry, BookFerry, MakeFerry, FetchAllThemeParks, BookThemeParks, MakeThemeParks, FetchAllPromos, MakePromo, FetchAllEvents, MakeEvents, CheckHotelBooking, GenerateTicket, CheckTicket, UpdateHotels, DeleteHotels, EditFerry, DelFerry, UpdateThemeParks, DeleteThemeParks, UpdatePromo, DeletePromo, UpdateEvents, DeleteEvents 
 
 STATIC_DIRECTORY:str = 'static/'
 ALLOWED_EXTENSIONS:tuple = ('.jpg', '.jpeg', '.png', '.webp')
@@ -45,7 +43,7 @@ async def CreateFerry(data:MakeFerry):
         conn.commit()
         return data.name
 
-async def UpdateFerry(data:MakeFerry):
+async def UpdateFerry(data:EditFerry):
     with ConnectDatabase() as conn:
         cursor = conn.cursor()
         if data.image:
