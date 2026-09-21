@@ -28,6 +28,9 @@ env/
 .pytest_cache/
 .coverage
 
+# Static files
+static/
+
 # Databases
 *.db
 *.sqlite

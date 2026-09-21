@@ -23,6 +23,27 @@ export default function Main() {
 
     const title = "Manage Theme Park Activities"
     const description = "Manage the activities available in your theme park. You can add, edit, or delete activities as needed."
+    const [themePark, setThemePark] = useState([])
+    const userId = 1
+
+    useEffect(() => {
+        async function fetchThemeParkPage() {
+            try {
+                const response = await fetch('http://localhost:8000/api/theme-park', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ requestId: userId })
+                });
+                if (response.ok) {
+                    const data = await response.json()
+                    setThemePark(data.themePark)
+                }
+            } catch (error) {
+                console.error('Error loading page:', error)
+            }
+        }
+        fetchThemeParkPage()
+    }, [])
     return (
         <div className="relative w-full h-full bg-[#F0FAFA] bg-[radial-gradient(#4bc0ad_1px,transparent_1px)] [background-size:16px_16px] px-9 py-4 flex flex-col gap-4 mt-16">
             <Header />
