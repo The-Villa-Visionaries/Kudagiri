@@ -1,6 +1,7 @@
 import ThemeCard from "./ThemeCard"
 
 interface themePark {
+    themeParkId: number
     name: string
     description: string
     price: number
@@ -17,7 +18,7 @@ interface ThemeGridProps {
     role?: string
     edit?: boolean
     onClick?: () => void
-    themePark?: any[]
+    themePark?: themePark[]
 }
 
 export default function ThemeGrid({ role, edit, onClick, themePark }: ThemeGridProps) {

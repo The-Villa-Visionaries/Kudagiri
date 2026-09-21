@@ -1,6 +1,6 @@
 import RoomCard from "../hotels/RoomCard"
 
-interface Hotel {
+export interface Hotel {
     hotelId: number
     name: string
     description: string
@@ -18,7 +18,7 @@ interface Hotel {
 interface RoomGridProps {
     role?: string
     edit?: boolean
-    onClick?: () => void
+    onClick?: (hotelId: number) => void
     hotels: Hotel[]
 }
 
@@ -32,7 +32,7 @@ export default function RoomsGrid({ role, edit, onClick, hotels }: RoomGridProps
             </div>
             <div className="flex flex-wrap gap-5 justify-between">
                 {hotels.map((hotel, index) => (
-                    <RoomCard key={index} role={role} edit={edit} onClick={onClick} hotels={hotel} />
+                    <RoomCard key={index} role={role} edit={edit} onClick={() => onClick?.(hotel.hotelId)} hotels={hotel} />
                 ))}
             </div>
         </div>

@@ -51,7 +51,7 @@ export default function Main() {
             <FilterBar Page="Theme Park" Create={true} onCreateClick={() => setSwitchState(true)} />
             <div className="w-full flex items-start justify-between">
                 <div className="min-w-4/6">
-                    <ThemeGrid role={role} edit={true} onClick={() => setSwitchState(false)} />
+                    <ThemeGrid role={role} edit={true} onClick={() => setSwitchState(false)} themePark={themePark} />
                     <PageIndex />
                 </div>
                 {switchState ? <Create /> : <Edit />}

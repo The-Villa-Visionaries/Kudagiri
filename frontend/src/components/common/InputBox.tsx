@@ -1,17 +1,18 @@
 import downSVG from "../../assets/icons/justButt.svg"
-import React from "react";
+import React from "react"
 
 interface InputBoxProps {
-    icon?: string;
-    label: string;
-    placeholder: string;
-    buttonText?: string;
-    value?: string;
-    onClick?: () => void;
+    icon?: string
+    label: string
+    placeholder: string
+    buttonText?: string
+    value?: string
+    onClick?: (inputValue: string) => void
 }
 
 export default function InputBox({ icon, label, placeholder, buttonText, value, onClick }: InputBoxProps) {
     const [dropdownOpen, setDropdownOpen] = React.useState(false)
+    const [inputValue, setInputValue] = React.useState(value || "")
     buttonText = buttonText
     return (
         <div className="w-full flex flex-col">
@@ -22,8 +23,8 @@ export default function InputBox({ icon, label, placeholder, buttonText, value, 
             </div>
             {dropdownOpen && (
             <div className="w-full flex gap-2">
-                <input type="text" placeholder={placeholder} value={value} className="w-2/3 p-2 px-3 bg-[#E8F5F5] text-black border border-[#558282] rounded-full" />
-                {buttonText && <button onClick={onClick} className="w-1/3 p-2 bg-[#0E7490] text-white rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>}
+                <input type="text" placeholder={placeholder} value={value} onChange={(e) => setInputValue(e.target.value)} className="w-2/3 p-2 px-3 bg-[#E8F5F5] text-black border border-[#558282] rounded-full" />
+                {buttonText && <button onClick={() => onClick?.(inputValue)} className="w-1/3 p-2 bg-[#0E7490] text-white rounded-full hover:bg-[#0891B2] transition-transform duration-200 ease-in-out hover:scale-105 hover:cursor-pointer">{buttonText}</button>}
             </div>
             )}
         </div>

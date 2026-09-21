@@ -1,5 +1,5 @@
 import PromoBanner, { type Promotion } from "../components/promotions/PromoBanner"
-import RoomGrid from "../components/hotels/RoomGrid"
+import RoomGrid, { type Hotel } from "../components/hotels/RoomGrid"
 import PageTitle from "../components/common/PageTitle"
 import FilterBar from "../components/common/FilterBar"
 import PageIndex from "../components/common/PageIndex"
@@ -12,6 +12,11 @@ export default function Main() {
     const description = "luxury stays and beachfront suites — your gateway to an unforgettable island stay"
     const [hotels, setHotels] = useState([])
     const [promotions, setPromotions] = useState<Promotion[]>([])
+    const handleClick = (hotelId: number) => {
+        const selectedHotel = hotels.find((hotel: any) => hotel.hotelId === hotelId)
+        setSelectedHotel(selectedHotel || null)
+    }
+    const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null)
     const userId = 1
 
     useEffect(() => {
@@ -41,10 +46,10 @@ export default function Main() {
             <FilterBar Page="Hotels" />
             <div className="w-full flex items-start justify-between">
                 <div className="min-w-4/6">
-                    <RoomGrid hotels={hotels} />
+                    <RoomGrid onClick={handleClick} hotels={hotels} />
                     <PageIndex />
                 </div>
-                <BookingSummary />
+                <BookingSummary selectedHotel={selectedHotel} />
             </div>
         </div>
     )
